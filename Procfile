@@ -1,1 +1,1 @@
-web: gunicorn colegio_ninito_jesus.wsgi --log-file -
+web: gunicorn colegio_ninito_jesus.wsgi --bind 0.0.0.0:$PORT --log-file -
