@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Inicio - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<!-- Notificaciones internas -->
+{% if notificaciones %}
+<section class="py-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-warning text-dark fw-bold">
+                        <i class="fas fa-bell me-2"></i> Notificaciones importantes
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for notificacion in notificaciones %}
+                        <li class="list-group-item {% if not notificacion.leida %}fw-bold{% endif %}">
+                            <span class="badge bg-{{ notificacion.tipo }} me-2">{{ notificacion.get_tipo_display }}</span>
+                            {{ notificacion.titulo }}<br>
+                            <small class="text-muted">{{ notificacion.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                            <div class="mt-1">{{ notificacion.contenido|linebreaksbr }}</div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No tienes notificaciones nuevas.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- Fondo degradado moderno -->
+<section class="py-5" style="background: linear-gradient(135deg, #221c35 60%, #2196f3 100%); min-height: 350px;">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 text-center fw-bold text-uppercase" style="color:#fff; letter-spacing:2px; font-size:1.3rem;">Sea parte de nuestra familia</div>
+            <div class="col-12 text-center">
+                <h2 class="fw-bold display-5" style="color:#fff;">¡Estudie con nosotros!</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center g-4">
+            <div class="col-12 col-md-4">
+                <a href="/catalogo-libros/" class="text-decoration-none">
+                    <div class="card h-100 text-center border-0 shadow-lg" style="background:rgba(33,150,243,0.95); border-radius:1rem;">
+                        <div class="card-body">
+                            <i class="fas fa-book-open fa-3x mb-3" style="color:#fff;"></i>
+                            <h5 class="fw-bold" style="color:#fff;">Catálogo de Libros</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a href="{% url 'admisiones:padres_estudiantes' %}" class="text-decoration-none">
+                    <div class="card h-100 text-center border-0 shadow-lg" style="background:rgba(67,160,71,0.95); border-radius:1rem;">
+                        <div class="card-body">
+                            <i class="fas fa-chalkboard-teacher fa-3x mb-3" style="color:#fff;"></i>
+                            <h5 class="fw-bold" style="color:#fff;">Padres/Estudiantes</h5>
+                            <span class="badge bg-light text-success mt-2">Aula Virtual</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a href="/calificaciones/" class="text-decoration-none">
+                    <div class="card h-100 text-center border-0 shadow-lg" style="background:rgba(33,150,243,0.95); border-radius:1rem;">
+                        <div class="card-body">
+                            <i class="fas fa-file-alt fa-3x mb-3" style="color:#fff;"></i>
+                            <h5 class="fw-bold" style="color:#fff;">Calificaciones</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <span class="text-light fw-semibold" style="font-size:1.1rem;">¡Descubre una educación integral, moderna y con valores!</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section with Logo -->
+<header class="bg-white shadow-sm">
+    <div class="container py-3">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center text-md-start">
+                <img src="{% static 'images/niñito jesus.JPG' %}" alt="Colegio Niño Jesús" class="img-fluid" style="max-height: 100px;">
+            </div>
+            <div class="col-md-8 text-center text-md-end mt-3 mt-md-0">
+                <div class="d-flex flex-column flex-md-row justify-content-md-end align-items-center">
+                    <div class="me-md-4 mb-2 mb-md-0">
+                        <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                        <span>Calle 1era no. 31, Urbanización Reparto Edda, Santo Domingo, República Dominicana</span>
+                    </div>
+                    <div class="me-md-4 mb-2 mb-md-0">
+                        <i class="fas fa-phone text-primary me-2"></i>
+                        <span>Teléfono: 1 (809) 533-6088</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-envelope text-primary me-2"></i>
+                        <span>info@colegioninojesus.edu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Content -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold">Bienvenidos al Colegio Niño Jesús</h1>
+                <p class="lead">Formando líderes con valores cristianos y excelencia académica</p>
+                <a href="{% url 'admisiones:admisiones' %}" class="btn btn-light btn-lg me-2">Admisiones</a>
+                <a href="{% url 'admisiones:contacto' %}" class="btn btn-outline-light btn-lg">Contáctenos</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'images/imagen colegio.JPG' %}" alt="Vista del Colegio Niño Jesús" class="img-fluid rounded shadow mb-3" style="max-height: 400px; width: 100%; object-fit: cover;" loading="lazy" srcset="{% static 'images/imagen colegio.JPG' %} 400w, {% static 'images/imagen colegio.JPG' %} 800w" sizes="(max-width: 600px) 100vw, 50vw">
+                <img src="{% static 'images/tips_lectura_comprensiva.png' %}" alt="Tips de Lectura Comprensiva" class="img-fluid rounded shadow mb-3" style="max-height: 400px; width: 100%; object-fit: contain;" loading="lazy" srcset="{% static 'images/tips_lectura_comprensiva.png' %} 400w, {% static 'images/tips_lectura_comprensiva.png' %} 800w" sizes="(max-width: 600px) 100vw, 50vw">
+                <img src="{% static 'images/dia_del_hermano.png' %}" alt="Día del Hermano" class="img-fluid rounded shadow" style="max-height: 400px; width: 100%; object-fit: contain;" loading="lazy" srcset="{% static 'images/dia_del_hermano.png' %} 400w, {% static 'images/dia_del_hermano.png' %} 800w" sizes="(max-width: 600px) 100vw, 50vw">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Noticias Destacadas -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Últimas Noticias</h2>
+            <a href="{% url 'admisiones:lista_noticias' %}" class="btn btn-outline-primary">Ver todas las noticias</a>
+        </div>
+        
+        <div class="row">
+            {% for noticia in noticias_destacadas %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if noticia.imagen_principal %}
+                    <img src="{{ noticia.imagen_principal.url }}" class="card-img-top" alt="{{ noticia.titulo }}" loading="lazy" srcset="{{ noticia.imagen_principal.url }} 400w, {{ noticia.imagen_principal.url }} 800w" sizes="(max-width: 600px) 100vw, 33vw">
+                    {% else %}
+                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-newspaper fa-4x"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">{{ noticia.fecha_publicacion|date:"d M Y" }}</span>
+                        <h5 class="card-title">{{ noticia.titulo }}</h5>
+                        <p class="card-text">{{ noticia.contenido|truncatewords:20|striptags }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="{% url 'admisiones:noticia_detalle' noticia.pk %}" class="btn btn-sm btn-outline-primary">Leer más</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Próximos Eventos -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Próximos Eventos</h2>
+            <a href="{% url 'admisiones:lista_eventos' %}" class="btn btn-outline-primary">Ver todos los eventos</a>
+        </div>
+        
+        <div class="row">
+            {% for evento in eventos_proximos %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-{{ evento.tipo }} mb-2">{{ evento.get_tipo_display }}</span>
+                        <h5 class="card-title">{{ evento.titulo }}</h5>
+                        <p class="card-text">
+                            <i class="far fa-calendar-alt me-2"></i>
+                            {{ evento.fecha_inicio|date:"d M Y" }}
+                            {% if evento.hora_inicio %}
+                                <br>
+                                <i class="far fa-clock me-2"></i>
+                                {{ evento.hora_inicio|time:"g:i A" }}
+                            {% endif %}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            {{ evento.lugar }}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="{% url 'admisiones:evento_detalle' evento.slug %}" class="btn btn-sm btn-outline-primary">Más información</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Nuestras Actividades -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Nuestras Actividades</h2>
+        <div class="row g-4">
+            <!-- Actividad 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div style="height: 250px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; padding: 15px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#deporteModal">
+                        <img src="{% static 'images/1.jpg' %}" alt="Actividades Deportivas" style="max-height: 100%; max-width: 100%; width: auto; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Actividades Deportivas</h5>
+                        <p class="card-text">Fomentamos el deporte como parte fundamental del desarrollo integral de nuestros estudiantes. <a href="#" data-bs-toggle="modal" data-bs-target="#deporteModal">Ver más</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actividad 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div style="height: 250px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; padding: 15px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                        <img src="{% static 'images/alte.JPG' %}" alt="Arte y Cultura" style="max-height: 100%; max-width: 100%; width: auto; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Arte y Cultura</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Talleres y Actividades</h6>
+                        <p class="card-text">Desarrollamos la creatividad y expresión artística a través de diversas disciplinas culturales. <a href="#" data-bs-toggle="modal" data-bs-target="#imagenModal">Ver más</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actividad 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div style="height: 250px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; padding: 15px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cienciaModal">
+                        <img src="{% static 'images/ciencia.jpg' %}" alt="Ciencia y Tecnología" style="max-height: 100%; max-width: 100%; width: auto; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Ciencia y Tecnología</h5>
+                        <p class="card-text">Incentivamos la investigación y el uso de tecnología como herramientas para el aprendizaje. <a href="#" data-bs-toggle="modal" data-bs-target="#cienciaModal">Ver más</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Valores -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Nuestros Valores</h2>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                    <i class="fas fa-heart fa-3x"></i>
+                </div>
+                <h4>Amor</h4>
+                <p class="text-muted">Fomentamos el amor al prójimo y a Dios en cada una de nuestras acciones.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                    <i class="fas fa-graduation-cap fa-3x"></i>
+                </div>
+                <h4>Excelencia</h4>
+                <p class="text-muted">Buscamos la excelencia académica en un ambiente de respeto y disciplina.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                    <i class="fas fa-hands-helping fa-3x"></i>
+                </div>
+                <h4>Solidaridad</h4>
+                <p class="text-muted">Promovemos la ayuda mutua y el trabajo en equipo.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                    <i class="fas fa-praying-hands fa-3x"></i>
+                </div>
+                <h4>Fe</h4>
+                <p class="text-muted">Vivimos nuestra fe católica en el día a día.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal para la imagen en grande -->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Arte y Cultura</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{% static 'images/alte.JPG' %}" class="img-fluid" alt="Arte y Cultura">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para la imagen en grande -->
+<div class="modal fade" id="deporteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Actividades Deportivas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{% static 'images/1.jpg' %}" class="img-fluid" alt="Actividades Deportivas">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para la imagen de Ciencia y Tecnología -->
+<div class="modal fade" id="cienciaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ciencia y Tecnología</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{% static 'images/ciencia.jpg' %}" class="img-fluid" alt="Ciencia y Tecnología">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

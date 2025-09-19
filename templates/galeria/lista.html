@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Galería Multimedia - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4 text-center">Galería Multimedia</h2>
+    <div class="row g-4">
+      {% if imagenes %}
+        {% for imagen in imagenes %}
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img src="{{ imagen.url }}" class="card-img-top" alt="Imagen galería" loading="lazy">
+            <div class="card-body">
+              <h5 class="card-title">{{ imagen.titulo }}</h5>
+              <p class="card-text">{{ imagen.descripcion }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% if is_paginated %}
+        <div class="col-12">
+          <nav aria-label="Paginación de galería">
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Primera">
+                  <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {% endif %}
+              {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                  <span class="page-link">{{ num }}</span>
+                </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                  <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+      {% else %}
+        <div class="col-12 text-center">
+          <div class="alert alert-info">No hay imágenes disponibles en la galería.</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

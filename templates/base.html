@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es" aria-label="Sitio Colegio Niño Jesús">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Colegio Niño Jesús{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+        <!-- Bootstrap 5 Navbar Mejorado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow" aria-label="Menú principal">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="{% url 'admisiones:inicio' %}">
+                    <img src="{% static 'images/niñitojesus.jpg' %}" alt="Logo Colegio Niñito Jesús" width="64" height="64" style="background:white; border-radius:50%; box-shadow:0 4px 16px rgba(0,0,0,0.12); object-fit:cover; display:block; margin:auto;" class="me-3 align-middle" loading="lazy">
+                    <span class="fw-bold">Colegio Niñito Jesús</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" aria-label="Navegación principal">
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:historia' %}" aria-label="Ir a Historia">Historia</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:mision' %}" aria-label="Ir a Misión">Misión</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:vision' %}" aria-label="Ir a Visión">Visión</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:admisiones' %}" aria-label="Ir a Admisiones">Admisiones</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:lista_noticias' %}">Noticias</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:contacto' %}">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:galeria' %}">Galería</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:calendario_escolar' %}">Calendario</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:recursos' %}">Recursos</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:testimonios' %}">Testimonios</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:mapa' %}">Mapa</a></li>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger ms-2" onclick="return confirm('¿Seguro que deseas cerrar la sesión?');">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                                                                            <a class="btn btn-outline-light me-2" href="{% url 'admisiones:padres_estudiantes' %}">
+                                                                                <i class="fas fa-chalkboard-teacher me-1"></i> Aula Virtual
+                                                                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-warning" href="https://www.bancopopular.com.do/Personas/PagosEnLinea" target="_blank">
+                                <i class="fas fa-credit-card me-1"></i> Pagos en Línea
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item"><a class="nav-link text-white" href="https://facebook.com" target="_blank"><i class="fab fa-facebook fa-lg"></i></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="https://instagram.com" target="_blank"><i class="fab fa-instagram fa-lg"></i></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="https://youtube.com" target="_blank"><i class="fab fa-youtube fa-lg"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="nosotrosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nosotros</a>
+                        <ul class="dropdown-menu" aria-labelledby="nosotrosDropdown">
+                            <li><a class="dropdown-item" href="{% url 'admisiones:institucional' %}#historia">Historia</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:institucional' %}#mision">Misión</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:institucional' %}#vision">Visión</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:contacto' %}">Contacto</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="academicoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Académico</a>
+                        <ul class="dropdown-menu" aria-labelledby="academicoDropdown">
+                            <li><a class="dropdown-item" href="{% url 'admisiones:galeria_multimedia' %}">Galería</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:calendario_escolar' %}">Calendario</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:recursos' %}">Recursos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:testimonios' %}">Testimonios</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="admisionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admisiones</a>
+                        <ul class="dropdown-menu" aria-labelledby="admisionDropdown">
+                            <li><a class="dropdown-item" href="{% url 'admisiones:admisiones' %}">Información</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:padres_estudiantes' %}">Padres/Estudiantes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'admisiones:lista_noticias' %}">Noticias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'admisiones:lista_eventos' %}">Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'admisiones:mapa' %}">Mapa</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="btn btn-panel fw-bold mb-2 w-100" href="{% url 'admisiones:panel_usuario' %}">
+                                <i class="fas fa-user"></i> Mi Panel
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated and user.rol == 'profesor' or user.is_authenticated and user.is_staff %}
+                        <li class="nav-item">
+                            <a class="btn btn-notificacion fw-bold mb-2 w-100" href="{% url 'admisiones:crear_notificacion' %}">
+                                <i class="fas fa-bell"></i> Crear Notificación
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated and user.rol == 'profesor' %}
+                        <li class="nav-item">
+                            <a class="btn btn-panel fw-bold mb-2 w-100" href="{% url 'admisiones:panel_profesor' %}">
+                                <i class="fas fa-chalkboard-teacher"></i> Panel de Profesor
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated and user.is_staff %}
+                        <!-- Menú de administración solo para administradores -->
+                        <li class="nav-item">
+                            <a class="btn btn-admin fw-bold mb-2 w-100" href="{% url 'admin:index' %}">
+                                <i class="fa fa-cog"></i> Administración
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-agregar fw-bold mb-2 w-100" href="{% url 'admisiones:nueva_noticia' %}">
+                                <i class="fa fa-plus"></i> Agregar Noticia
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-agregar fw-bold mb-2 w-100" href="{% url 'admisiones:crear_evento' %}">
+                                <i class="fa fa-plus"></i> Agregar Evento
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <div class="d-flex">
+                    <a href="{% url 'admisiones:padres_estudiantes' %}" class="btn btn-light me-2">
+                        <i class="fas fa-chalkboard-teacher me-1"></i> Portal de Padres
+                    </a>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                        {% if messages %}
+                            <div class="modal-body">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                            <div class="mb-2 text-end">
+                                <a href="{% url 'admisiones:recuperar_contrasena' %}" class="link-primary">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="loginSubmitBtn">
+                            <span id="loginSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                </form>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var loginForm = document.querySelector('form[action="{% url 'login' %}"]');
+                    var loginBtn = document.getElementById('loginSubmitBtn');
+                    var spinner = document.getElementById('loginSpinner');
+                    if (loginForm && loginBtn && spinner) {
+                        loginForm.addEventListener('submit', function() {
+                            loginBtn.disabled = true;
+                            spinner.classList.remove('d-none');
+                        });
+                    }
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-4 mt-5">
+    <div class="container" style="color:#222;">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Colegio Niño Jesús</h5>
+                    <p>Formando líderes con valores cristianos y excelencia académica.<br>
+                    <span class="text-muted">🏫 Fundado en 1979.</span></p>
+                    <img src="{% static 'images/niñitojesus.jpg' %}" alt="Logo Colegio" width="80" height="80" class="mt-3 rounded-circle" loading="lazy">
+                    <hr>
+                    <h5>Contacto</h5>
+                    <p>
+                        <i class="fas fa-map-marker-alt me-2"></i> Calle 1era no. 31, Urbanización Reparto Edda, Santo Domingo, República Dominicana<br>
+                        <i class="fas fa-phone me-2"></i> (809) 555-1234<br>
+                        <i class="fas fa-envelope me-2"></i> info@colegioninojesus.edu
+                    </p>
+                    <hr>
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/colegioninojesus" target="_blank" class="text-primary me-2"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="https://twitter.com/colegioninojesus" target="_blank" class="text-info me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="https://www.instagram.com/colegioninojesus" target="_blank" class="text-danger me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="https://www.youtube.com/@colegioninojesus" target="_blank" class="text-danger me-2"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="https://aulavirtual.colegio.edu.do" target="_blank" class="btn btn-panel btn-sm me-2">Aula Virtual</a>
+                        <a href="https://pagos.colegio.edu.do" target="_blank" class="btn btn-panel btn-sm">Pagos en Línea</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/colegioninojesus" target="_blank" class="text-white me-2"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="https://twitter.com/colegioninojesus" target="_blank" class="text-white me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="https://www.instagram.com/colegioninojesus" target="_blank" class="text-white me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="https://www.youtube.com/@colegioninojesus" target="_blank" class="text-white me-2"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="https://aulavirtual.colegio.edu.do" target="_blank" class="btn btn-panel btn-sm me-2">Aula Virtual</a>
+                        <a href="https://pagos.colegio.edu.do" target="_blank" class="btn btn-panel btn-sm">Pagos en Línea</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; {% now "Y" %} Colegio Niño Jesús. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+<script>
+    // Efecto parallax para imágenes con la clase .img-fluid y .galeria-img
+    document.addEventListener("mousemove", function(e) {
+        document.querySelectorAll(".img-fluid, .galeria-img").forEach(function(img) {
+            const speed = 2;
+            const x = (window.innerWidth - e.pageX * speed) / 100;
+            const y = (window.innerHeight - e.pageY * speed) / 100;
+            img.style.transform = `scale(1.07) rotate(-2deg) translate(${x}px, ${y}px)`;
+        });
+    });
+
+    // Restaurar animación al salir del área
+    document.querySelectorAll(".img-fluid, .galeria-img").forEach(function(img) {
+        img.addEventListener("mouseleave", function() {
+            img.style.transform = "scale(1.0) rotate(0deg)";
+        });
+    });
+</script>
+</html>

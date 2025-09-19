@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Crear Notificación{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="fas fa-bell me-2"></i> Crear Notificación Interna
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Enviar notificación</button>
+                        <a href="{% url 'admisiones:inicio' %}" class="btn btn-secondary ms-2">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

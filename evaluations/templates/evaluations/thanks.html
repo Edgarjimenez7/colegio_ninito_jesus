@@ -1,0 +1,11 @@
+{% extends 'evaluations/base_evaluations.html' %}
+
+{% block evaluation_content %}
+<div class="text-center">
+    <div class="success-message show">
+        <h3>¡Gracias por tu evaluación!</h3>
+        <p>Tu opinión es muy valiosa para nosotros y nos ayudará a mejorar.</p>
+    </div>
+    <a href="{% url 'evaluations:teacher_list' %}" class="btn btn-secondary">Volver a la lista de profesores</a>
+</div>
+{% endblock %}

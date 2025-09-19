@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Comprobante de Pago Bancario{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Subir Comprobante de Pago Bancario</h2>
+  <form method="post" enctype="multipart/form-data" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Subir comprobante</button>
+  </form>
+  <hr>
+  <h4>Mis comprobantes enviados</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Monto</th>
+          <th>Fecha de pago</th>
+          <th>Archivo</th>
+          <th>Estado</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comprobante in comprobantes %}
+        <tr>
+          <td>${{ comprobante.monto }}</td>
+          <td>{{ comprobante.fecha_pago|date:"d/m/Y" }}</td>
+          <td><a href="{{ comprobante.comprobante.url }}" target="_blank">Ver archivo</a></td>
+          <td>{% if comprobante.aprobado %}<span class="badge bg-success">Aprobado</span>{% else %}<span class="badge bg-warning">Pendiente</span>{% endif %}</td>
+          <td>{{ comprobante.observaciones|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No has subido comprobantes aún.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

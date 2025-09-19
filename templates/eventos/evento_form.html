@@ -1,0 +1,285 @@
+{% extends 'eventos/base_eventos.html' %}
+{% load widget_tweaks %}
+
+{% block head_title %}{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Evento{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'admisiones:lista_eventos' %}">Eventos</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {% if form.instance.pk %}{{ form.instance.titulo|truncatechars:30 }}{% else %}Nuevo{% endif %}
+    </li>
+{% endblock %}
+
+{% block eventos_content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">
+                <i class="fas {% if form.instance.pk %}fa-edit{% else %}fa-plus-circle{% endif %} mr-2"></i>
+                {% if form.instance.pk %}Editar Evento{% else %}Agregar Nuevo Evento{% endif %}
+            </h4>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-exclamation-triangle"></i> Error
+                    </h5>
+                    <ul class="mb-0">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Título -->
+                        <div class="form-group">
+                            <label for="{{ form.titulo.id_for_label }}" class="font-weight-bold">
+                                {{ form.titulo.label }}
+                                {% if form.titulo.field.required %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            {% if form.titulo.errors %}
+                                {{ form.titulo|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.titulo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.titulo|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.titulo.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Descripción -->
+                        <div class="form-group">
+                            <label for="{{ form.descripcion.id_for_label }}" class="font-weight-bold">
+                                {{ form.descripcion.label }}
+                                {% if form.descripcion.field.required %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            {% if form.descripcion.errors %}
+                                {{ form.descripcion|add_class:"form-control is-invalid"|attr:"rows:6" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.descripcion.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.descripcion|add_class:"form-control"|attr:"rows:6" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.descripcion.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Imagen -->
+                        <div class="form-group">
+                            <label for="{{ form.imagen.id_for_label }}" class="font-weight-bold">
+                                {{ form.imagen.label }}
+                                {% if form.imagen.field.required %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            {% if form.imagen.errors %}
+                                <div class="custom-file">
+                                    {{ form.imagen|add_class:"custom-file-input is-invalid" }}
+                                    <label class="custom-file-label" for="{{ form.imagen.id_for_label }}">
+                                        Seleccionar archivo...
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback">
+                                    {% for error in form.imagen.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="custom-file">
+                                    {{ form.imagen|add_class:"custom-file-input" }}
+                                    <label class="custom-file-label" for="{{ form.imagen.id_for_label }}">
+                                        {% if form.instance.imagen %}
+                                            {{ form.instance.imagen.name|slice:":-15" }}...
+                                        {% else %}
+                                            Seleccionar archivo...
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.imagen.help_text }}
+                            </small>
+                            {% if form.instance.imagen %}
+                                <div class="mt-2">
+                                    <img src="{{ form.instance.imagen.url }}" alt="{{ form.instance.titulo }}" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <!-- Fecha y Hora de Inicio -->
+                        <div class="form-group">
+                            <label for="{{ form.fecha_inicio.id_for_label }}" class="font-weight-bold">
+                                {{ form.fecha_inicio.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+                            {% if form.fecha_inicio.errors %}
+                                {{ form.fecha_inicio|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.fecha_inicio.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.fecha_inicio|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.fecha_inicio.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Fecha y Hora de Fin -->
+                        <div class="form-group">
+                            <label for="{{ form.fecha_fin.id_for_label }}" class="font-weight-bold">
+                                {{ form.fecha_fin.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+                            {% if form.fecha_fin.errors %}
+                                {{ form.fecha_fin|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.fecha_fin.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.fecha_fin|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.fecha_fin.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Lugar -->
+                        <div class="form-group">
+                            <label for="{{ form.lugar.id_for_label }}" class="font-weight-bold">
+                                {{ form.lugar.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+                            {% if form.lugar.errors %}
+                                {{ form.lugar|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lugar.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.lugar|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.lugar.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Tipo -->
+                        <div class="form-group">
+                            <label for="{{ form.tipo.id_for_label }}" class="font-weight-bold">
+                                {{ form.tipo.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+                            {% if form.tipo.errors %}
+                                {{ form.tipo|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.tipo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.tipo|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.tipo.help_text }}
+                            </small>
+                        </div>
+                        
+                        <!-- Enlace de más información -->
+                        <div class="form-group">
+                            <label for="{{ form.enlace_mas_info.id_for_label }}" class="font-weight-bold">
+                                {{ form.enlace_mas_info.label }}
+                            </label>
+                            {% if form.enlace_mas_info.errors %}
+                                {{ form.enlace_mas_info|add_class:"form-control is-invalid" }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.enlace_mas_info.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.enlace_mas_info|add_class:"form-control" }}
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {{ form.enlace_mas_info.help_text }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save mr-2"></i>
+                        {% if form.instance.pk %}Actualizar{% else %}Crear{% endif %} Evento
+                    </button>
+                    <a href="{% if form.instance.pk %}{% url 'admisiones:evento_detalle' slug=form.instance.slug %}{% else %}{% url 'admisiones:lista_eventos' %}{% endif %}" 
+                       class="btn btn-outline-secondary">
+                        <i class="fas fa-times mr-2"></i>Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Actualizar el nombre del archivo seleccionado en el input file
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        if (fileName.length > 30) {
+            fileName = fileName.substring(0, 15) + '...' + fileName.substring(fileName.length - 10);
+        }
+        $(this).next('.custom-file-label').html(fileName || 'Seleccionar archivo...');
+    });
+    
+    // Inicializar datepickers
+    $('#id_fecha_inicio, #id_fecha_fin').datetimepicker({
+        format: 'Y-m-d H:i',
+        step: 30,
+        minDate: 0,
+        dayOfWeekStart: 1,
+        defaultTime: '09:00',
+        closeOnDateSelect: false,
+        closeOnTimeSelect: true,
+        validateOnBlur: false
+    });
+    
+    // Validación del formulario
+    $('form').on('submit', function(e) {
+        const fechaInicio = new Date($('#id_fecha_inicio').val());
+        const fechaFin = new Date($('#id_fecha_fin').val());
+        
+        if (fechaInicio && fechaFin && fechaInicio > fechaFin) {
+            e.preventDefault();
+            alert('La fecha de fin debe ser posterior a la fecha de inicio.');
+            return false;
+        }
+        return true;
+    });
+});
+</script>
+{% endblock %}

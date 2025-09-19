@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Calificaciones de mis hijos</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Hijo</th>
+        <th>Tarea</th>
+        <th>Nota</th>
+        <th>Observaciones</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for calificacion in calificaciones %}
+      <tr>
+        <td>{{ calificacion.hijo.nombre }}</td>
+        <td>{{ calificacion.tarea.titulo }}</td>
+        <td>{{ calificacion.nota }}</td>
+        <td>{{ calificacion.observaciones }}</td>
+        <td>{{ calificacion.fecha_asignada }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No hay calificaciones para tus hijos.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

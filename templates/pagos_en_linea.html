@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Pagos en Línea{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Pagos en Línea</h2>
+  <p>Elige tu banco para realizar el pago en línea. Serás redirigido a la pasarela oficial del banco. Cuando completes el pago, recibirás la confirmación y podrás subir el comprobante si lo deseas.</p>
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3">
+      <a href="#" class="btn btn-lg btn-outline-primary w-100" onclick="alert('Integración Banco Popular próximamente.'); return false;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Banco_Popular_Dominicano_logo.png" alt="Banco Popular" style="height:32px; margin-right:10px; vertical-align:middle;"> Pagar con Banco Popular
+      </a>
+    </div>
+    <div class="col-md-6 mb-3">
+      <a href="#" class="btn btn-lg btn-outline-secondary w-100" onclick="alert('Integración Banco BHD próximamente.'); return false;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BHD_Logo.png" alt="Banco BHD" style="height:32px; margin-right:10px; vertical-align:middle;"> Pagar con Banco BHD
+      </a>
+    </div>
+  </div>
+  <hr>
+  <h4>¿Ya realizaste el pago?</h4>
+  <p>Puedes subir el comprobante bancario <a href="{% url 'admisiones:comprobante_pago' %}" class="btn btn-outline-success btn-sm">aquí</a> para validación y registro.</p>
+  <div class="alert alert-info mt-4">
+    <strong>Nota:</strong> Cuando tengas las credenciales y la documentación de la API del banco, aquí se activará la integración directa y el procesamiento automático del pago.
+  </div>
+</div>
+{% endblock %}

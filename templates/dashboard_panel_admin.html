@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-admin">
+    <h1>Panel de Administración</h1>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>Usuarios</h2>
+            <p>Total: {{ total_usuarios }}</p>
+            <p>Padres: {{ total_padres }}</p>
+            <p>Profesores: {{ total_profesores }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Hijos</h2>
+            <p>Total: {{ total_hijos }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Tareas</h2>
+            <p>Total: {{ total_tareas }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Calificaciones</h2>
+            <p>Total: {{ total_calificaciones }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Eventos</h2>
+            <p>Total: {{ total_eventos }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Noticias</h2>
+            <p>Total: {{ total_noticias }}</p>
+        </div>
+    </div>
+</div>
+<style>
+.dashboard-admin { max-width: 900px; margin: 0 auto; padding: 2rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.stat-card { background: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 1.5rem; text-align: center; }
+.stat-card h2 { margin-bottom: 0.5rem; color: #2c3e50; }
+.stat-card p { font-size: 1.1rem; margin: 0.3rem 0; }
+@media (max-width: 600px) { .dashboard-admin { padding: 1rem; } .stats-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="galeria-multimedia">
+    <h1>Galería Multimedia</h1>
+    <div class="multimedia-grid">
+        {% for item in multimedia %}
+            <div class="media-card">
+                <h3>{{ item.titulo }}</h3>
+                <p>{{ item.descripcion }}</p>
+                {% if item.tipo == 'imagen' %}
+                    <img src="{{ item.archivo.url }}" alt="{{ item.titulo }}" loading="lazy" class="media-img" />
+                {% elif item.tipo == 'video' %}
+                    <video controls class="media-video">
+                        <source src="{{ item.archivo.url }}" type="video/mp4">
+                        Tu navegador no soporta el video.
+                    </video>
+                {% endif %}
+                <span class="media-date">{{ item.fecha_subida|date:"d/m/Y H:i" }}</span>
+            </div>
+        {% empty %}
+            <p>No hay contenido multimedia disponible.</p>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+<style>
+.galeria-multimedia { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+.multimedia-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.media-card { background: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 1rem; text-align: center; }
+.media-img { max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 0.5rem; }
+.media-video { max-width: 100%; border-radius: 6px; margin-bottom: 0.5rem; }
+.media-date { display: block; font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+.pagination { margin-top: 2rem; text-align: center; }
+.pagination a { margin: 0 1rem; color: #2c3e50; text-decoration: none; font-weight: bold; }
+@media (max-width: 600px) { .galeria-multimedia { padding: 1rem; } .multimedia-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}

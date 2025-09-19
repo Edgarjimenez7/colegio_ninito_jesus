@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Noticias - Colegio Niño Jesús{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold">Noticias</h1>
+                <nav aria-label="breadcrumb" class="d-flex justify-content-center">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{% url 'admisiones:inicio' %}" class="text-white">Inicio</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Noticias</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lista de Noticias -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Contenido principal -->
+            <div class="col-lg-8">
+                {% if user.is_staff %}
+                <div class="d-flex justify-content-end mb-4">
+                    <a href="{% url 'admisiones:nueva_noticia' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Agregar Noticia
+                    </a>
+                </div>
+                {% endif %}
+                
+                {% if noticias %}
+                    <div class="row">
+                        {% for noticia in noticias %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                {% if noticia.imagen_principal %}
+                                <img src="{{ noticia.imagen_principal.url }}" class="card-img-top" alt="{{ noticia.titulo }}">
+                                {% else %}
+                                <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Imagen de noticia">
+                                {% endif %}
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">
+                                        {{ noticia.fecha_publicacion|date:"d M Y" }}
+                                    </span>
+                                    <h5 class="card-title">{{ noticia.titulo }}</h5>
+                                    <p class="card-text">
+                                        {{ noticia.contenido|truncatewords:25|striptags }}
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-top-0">
+                                    <a href="{% url 'admisiones:noticia_detalle' noticia.pk %}" class="btn btn-outline-primary">
+                                        Leer más <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Paginación -->
+                    {% if is_paginated %}
+                    <nav aria-label="Paginación de noticias">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="Primera">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+
+                {% else %}
+                <div class="alert alert-info">
+                    No hay noticias disponibles en este momento.
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Widget de Categorías -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Categorías</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Académico
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Deportes
+                            <span class="badge bg-primary rounded-pill">8</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Cultural
+                            <span class="badge bg-primary rounded-pill">12</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            Eventos
+                            <span class="badge bg-primary rounded-pill">5</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Widget de Noticias Recientes -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Noticias Recientes</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for noticia in noticias|slice:":5" %}
+                        <a href="{% url 'admisiones:noticia_detalle' noticia.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ noticia.titulo|truncatewords:6 }}</h6>
+                                <small>{{ noticia.fecha_publicacion|date:"d M" }}</small>
+                            </div>
+                            <small class="text-muted">
+                                {{ noticia.contenido|truncatewords:8|striptags }}
+                            </small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Widget de Archivo -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Archivo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            {% for month in "123456789101112"|make_list %}
+                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                {{ forloop.counter|stringformat:"02d" }}/2023
+                                <span class="badge bg-primary rounded-pill">{{ forloop.counter }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

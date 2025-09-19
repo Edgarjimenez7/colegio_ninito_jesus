@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Testimonios - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<section id="testimonios" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4">Testimonios</h2>
+    <div class="row">
+      {% for testimonio in testimonios %}
+      <div class="col-md-6 mb-4">
+        <div class="card shadow">
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>{{ testimonio.texto|linebreaks }}</p>
+              <footer class="blockquote-footer">{{ testimonio.autor.get_full_name }}{% if testimonio.autor.rol %}, {{ testimonio.autor.rol|title }}{% endif %}</footer>
+            </blockquote>
+            <small class="text-muted">{{ testimonio.fecha|date:"d/m/Y H:i" }}</small>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info">No hay testimonios publicados aún.</div>
+      </div>
+      {% endfor %}
+    </div>
+    <hr>
+    <h4 class="mt-5">Deja tu testimonio</h4>
+    {% if user.is_authenticated %}
+      <form method="post" class="mb-5">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+      <div class="alert alert-warning">Tu testimonio será revisado antes de publicarse.</div>
+    {% else %}
+      <div class="alert alert-info">Debes iniciar sesión para dejar tu testimonio.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

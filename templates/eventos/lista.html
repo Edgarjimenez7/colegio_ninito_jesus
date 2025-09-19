@@ -1,0 +1,180 @@
+{% extends 'eventos/base_eventos.html' %}
+{% load static %}
+
+{% block head_title %}Lista de Eventos{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item active" aria-current="page">Lista</li>
+{% endblock %}
+
+{% block eventos_content %}
+    <h1 class="mb-4">Próximos Eventos</h1>
+    
+    {% if proximo_evento %}
+    <div class="card mb-4 border-primary">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Próximo Evento Destacado</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% if proximo_evento.imagen %}
+                <div class="col-md-4">
+                    <img src="{{ proximo_evento.imagen.url }}" class="img-fluid rounded" alt="{{ proximo_evento.titulo }}">
+                </div>
+                <div class="col-md-8">
+                {% else %}
+                <div class="col-12">
+                {% endif %}
+                    <h3 class="card-title">{{ proximo_evento.titulo }}</h3>
+                    <p class="text-muted">
+                        <i class="far fa-calendar-alt"></i> 
+                        {{ proximo_evento.fecha_inicio|date:"l, d F Y" }}
+                        <br>
+                        <i class="far fa-clock"></i> 
+                        {{ proximo_evento.fecha_inicio|time:"H:i" }} - {{ proximo_evento.fecha_fin|time:"H:i" }}
+                        <br>
+                        <i class="fas fa-map-marker-alt"></i> {{ proximo_evento.lugar }}
+                    </p>
+                    <p class="card-text">{{ proximo_evento.descripcion|truncatewords:30 }}</p>
+                    <a href="{% url 'admisiones:evento_detalle' slug=proximo_evento.slug %}" class="btn btn-primary">
+                        Ver más detalles <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Todos los Eventos</h5>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="list-view">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary active" id="grid-view">
+                        <i class="fas fa-th"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if eventos %}
+                <div class="row" id="eventos-container">
+                    {% for evento in eventos %}
+                    <div class="col-md-6 mb-4 evento-item">
+                        <div class="card h-100">
+                            {% if evento.imagen %}
+                            <img src="{{ evento.imagen.url }}" class="card-img-top" alt="{{ evento.titulo }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ evento.titulo }}</h5>
+                                <p class="text-muted small mb-2">
+                                    <i class="far fa-calendar-alt"></i> 
+                                    {{ evento.fecha_inicio|date:"d/m/Y" }}
+                                    <br>
+                                    <i class="far fa-clock"></i> 
+                                    {{ evento.fecha_inicio|time:"H:i" }} - {{ evento.fecha_fin|time:"H:i" }}
+                                    <br>
+                                    <i class="fas fa-map-marker-alt"></i> {{ evento.lugar }}
+                                </p>
+                                <p class="card-text">{{ evento.descripcion|truncatewords:20 }}</p>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <a href="{% url 'admisiones:evento_detalle' slug=evento.slug %}" class="btn btn-sm btn-outline-primary">
+                                    Ver detalles
+                                </a>
+                                {% if user.is_staff %}
+                                <div class="btn-group float-right">
+                                    <a href="{% url 'admisiones:editar_evento' slug=evento.slug %}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'admisiones:eliminar_evento' slug=evento.slug %}" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if is_paginated %}
+                <nav aria-label="Paginación de eventos">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="Primera">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                
+            {% else %}
+                <div class="alert alert-info mb-0">
+                    No hay eventos programados en este momento. Por favor, vuelve a revisar más tarde.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Toggle between list and grid view
+    $('#list-view').on('click', function() {
+        $('#eventos-container').removeClass('row-cols-md-2').addClass('row-cols-md-1');
+        $('.evento-item').removeClass('col-md-6').addClass('col-12');
+        $('.card').addClass('flex-row');
+        $('.card img').addClass('card-img-left');
+        $(this).addClass('active');
+        $('#grid-view').removeClass('active');
+    });
+    
+    $('#grid-view').on('click', function() {
+        $('#eventos-container').removeClass('row-cols-md-1').addClass('row-cols-md-2');
+        $('.evento-item').removeClass('col-12').addClass('col-md-6');
+        $('.card').removeClass('flex-row');
+        $('.card img').removeClass('card-img-left');
+        $(this).addClass('active');
+        $('#list-view').removeClass('active');
+    });
+});
+</script>
+{% endblock %}

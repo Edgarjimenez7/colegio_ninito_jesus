@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Selecciona un profesor para evaluar</h2>
+    
+    <div class="row">
+        {% for teacher in teachers %}
+        <div class="col-md-6 mb-4">
+            <a href="{% url 'evaluations:submit_evaluation' teacher.id %}" 
+               class="card text-decoration-none text-dark h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ teacher.image_url }}" 
+                             class="img-fluid rounded-start h-100" 
+                             alt="{{ teacher.name }}"
+                             style="object-fit: cover; width: 150px; height: 150px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ teacher.name }}</h5>
+                            <p class="card-text text-muted">{{ teacher.subject }}</p>
+                            <span class="badge bg-primary">Evaluar</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No hay profesores disponibles para evaluar en este momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

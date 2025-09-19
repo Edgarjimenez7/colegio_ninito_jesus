@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block head_title %}{% endblock %} - Eventos - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admisiones:inicio' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admisiones:lista_eventos' %}">Eventos</a></li>
+            {% block breadcrumb_items %}{% endblock %}
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            {% block eventos_content %}
+            {% endblock %}
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    Próximos Eventos
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for evento in eventos_proximos %}
+                    <a href="{% url 'admisiones:evento_detalle' slug=evento.slug %}" 
+                       class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ evento.titulo }}</h6>
+                            <small>{{ evento.fecha_inicio|date:"d M" }}</small>
+                        </div>
+                        <small class="text-muted">{{ evento.lugar }}</small>
+                    </a>
+                    {% empty %}
+                    <div class="list-group-item">
+                        <p class="mb-0 text-muted">No hay eventos próximos programados.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% if user.is_staff %}
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    Acciones
+                </div>
+                <div class="card-body p-2">
+                    <a href="{% url 'admisiones:crear_evento' %}" class="btn btn-success btn-sm btn-block">
+                        <i class="fas fa-plus"></i> Nuevo Evento
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

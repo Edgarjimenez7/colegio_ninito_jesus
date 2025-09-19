@@ -1,0 +1,305 @@
+{% extends 'eventos/base_eventos.html' %}
+{% load static %}
+
+{% block head_title %}{{ evento.titulo }} - Evento{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item active" aria-current="page">{{ evento.titulo|truncatechars:30 }}</li>
+{% endblock %}
+
+{% block eventos_content %}
+    <article class="evento-detalle">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="badge badge-{{ evento.tipo }} mb-2">
+                        {{ evento.get_tipo_display }}
+                    </span>
+                    <h1 class="mb-2">{{ evento.titulo }}</h1>
+                    <div class="text-muted mb-3">
+                        <p class="mb-1">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            {{ evento.fecha_inicio|date:"l, d \d\e F \d\e Y" }}
+                        </p>
+                        <p class="mb-1">
+                            <i class="far fa-clock mr-2"></i>
+                            De {{ evento.fecha_inicio|time:"H:i" }} a {{ evento.fecha_fin|time:"H:i" }}
+                        </p>
+                        <p class="mb-1">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            {{ evento.lugar }}
+                        </p>
+                        {% if evento.enlace_mas_info %}
+                        <p class="mb-0">
+                            <i class="fas fa-link mr-2"></i>
+                            <a href="{{ evento.enlace_mas_info }}" target="_blank" rel="noopener noreferrer">
+                                Más información
+                            </a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if user.is_staff %}
+                <div class="btn-group">
+                    <a href="{% url 'admisiones:editar_evento' slug=evento.slug %}" 
+                       class="btn btn-sm btn-outline-secondary"
+                       data-toggle="tooltip" 
+                       title="Editar evento">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'admisiones:eliminar_evento' slug=evento.slug %}" 
+                       class="btn btn-sm btn-outline-danger"
+                       data-toggle="tooltip" 
+                       title="Eliminar evento">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if evento.imagen %}
+            <div class="evento-imagen mt-3">
+                <img src="{{ evento.imagen.url }}" alt="{{ evento.titulo }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+        </header>
+        
+        <div class="evento-contenido">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Descripción del Evento</h5>
+                    <div class="card-text">
+                        {{ evento.descripcion|linebreaks }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Información Adicional</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <strong><i class="far fa-calendar-alt mr-2"></i>Fecha:</strong>
+                                    {{ evento.fecha_inicio|date:"d/m/Y" }}
+                                <style>
+                                .evento-detalle .evento-imagen {
+                                    max-height: 600px;
+                                    overflow: hidden;
+                                    border-radius: 0.35rem;
+                                    background: #fff;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+
+                                .evento-detalle .evento-imagen img {
+                                    width: 100%;
+                                    max-height: 600px;
+                                    object-fit: contain;
+                                    background: #fff;
+                                    display: block;
+                                    margin: 0 auto;
+                                }
+                                    <a href="{{ evento.enlace_mas_info }}" target="_blank" rel="noopener noreferrer">
+                                        Visitar sitio web
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Resumen</h6>
+                                    <p class="card-text">
+                                        <strong>Tipo:</strong> {{ evento.get_tipo_display }}<br>
+                                        <strong>Estado:</strong> 
+                                        {% if evento.esta_activo %}
+                                            <span class="text-success">En curso</span>
+                                        {% elif evento.es_proximo %}
+                                            <span class="text-primary">Próximamente</span>
+                                        {% else %}
+                                            <span class="text-muted">Finalizado</span>
+                                        {% endif %}
+                                        <br>
+                                        <strong>Publicado:</strong> {{ evento.fecha_creacion|date:"d/m/Y" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if evento.enlace_mas_info %}
+            <div class="text-center mt-4">
+                <a href="{{ evento.enlace_mas_info }}" 
+                   class="btn btn-primary btn-lg"
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    <i class="fas fa-external-link-alt mr-2"></i>Más información y registro
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        <footer class="mt-5 pt-4 border-top">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'admisiones:lista_eventos' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left mr-2"></i>Volver a la lista de eventos
+                    </a>
+                </div>
+                {% if user.is_staff %}
+                <div class="btn-group">
+                    <a href="{% url 'admisiones:editar_evento' slug=evento.slug %}" 
+                       class="btn btn-outline-primary">
+                        <i class="fas fa-edit mr-2"></i>Editar evento
+                    </a>
+                    <a href="{% url 'admisiones:eliminar_evento' slug=evento.slug %}" 
+                       class="btn btn-outline-danger">
+                        <i class="fas fa-trash mr-2"></i>Eliminar
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </footer>
+    </article>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Inicializar tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    // Inicializar popovers
+    $('[data-toggle="popover"]').popover();
+    
+    // Inicializar el contador regresivo
+    {% if evento.es_proximo %}
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const eventDate = new Date('{{ evento.fecha_inicio|date:"c" }}').getTime();
+        const distance = eventDate - now;
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById("countdown").innerHTML = 
+            `<div class="countdown-item"><span>${days}</span>días</div>
+             <div class="countdown-item"><span>${hours}</span>horas</div>
+             <div class="countdown-item"><span>${minutes}</span>min</div>
+             <div class="countdown-item"><span>${seconds}</span>seg</div>`;
+             
+        if (distance < 0) {
+            clearInterval(countdownTimer);
+            document.getElementById("countdown").innerHTML = "¡El evento ha comenzado!";
+        }
+    }
+    
+    // Actualizar cada segundo
+    updateCountdown();
+    const countdownTimer = setInterval(updateCountdown, 1000);
+    {% endif %}
+});
+</script>
+
+<style>
+.evento-detalle .badge {
+    font-size: 0.875rem;
+    padding: 0.4em 0.8em;
+    font-weight: 500;
+}
+
+.evento-detalle .badge-academico {
+    background-color: #4e73df;
+    color: white;
+}
+
+.evento-detalle .badge-deportivo {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.evento-detalle .badge-cultural {
+    background-color: #f6c23e;
+    color: #212529;
+}
+
+.evento-detalle .badge-religioso {
+    background-color: #e74a3b;
+    color: white;
+}
+
+.evento-detalle .evento-imagen {
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 0.35rem;
+}
+
+.evento-detalle .evento-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.countdown-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    min-width: 80px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.countdown-item span {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #4e73df;
+    line-height: 1.2;
+}
+
+.countdown-item:after {
+    content: '';
+    display: block;
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .countdown {
+        gap: 0.75rem;
+    }
+    
+    .countdown-item {
+        min-width: 60px;
+        padding: 0.5rem;
+    }
+    
+    .countdown-item span {
+        font-size: 1.25rem;
+    }
+    
+    .countdown-item:after {
+        font-size: 0.65rem;
+    }
+}
+</style>
+{% endblock %}

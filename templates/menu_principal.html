@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <title>Menú Principal - Colegio</title>
+  <link rel="stylesheet" href="{% static 'css/menu_style.css' %}">
+  {% csrf_token %}
+</head>
+<body>
+  <header>
+    <div class="menu-item" data-speed="2">
+      <img src="{% static 'images/colegio1.jpg' %}" alt="Inicio">
+      <span>Inicio</span>
+    </div>
+    <div class="menu-item" data-speed="4">
+      <img src="{% static 'images/colegio2.jpg' %}" alt="Nosotros">
+      <span>Nosotros</span>
+    </div>
+    <div class="menu-item" data-speed="6">
+      <img src="{% static 'images/colegio3.jpg' %}" alt="Admisiones">
+      <span>Admisiones</span>
+    </div>
+    <div class="menu-item" data-speed="8">
+      <img src="{% static 'images/colegio4.jpg' %}" alt="Contacto">
+      <span>Contacto</span>
+    </div>
+  </header>
+
+  <footer class="menu-footer">
+    <div class="footer-content">
+      <div class="footer-section address">
+        <h3>Dirección</h3>
+        <p>Av. Principal #123, Colonia Centro</p>
+        <p>Ciudad de México, CDMX 06000</p>
+        <p>Teléfono: (55) 1234-5678</p>
+        <p>Email: info@colegioninojesus.edu.mx</p>
+      </div>
+      <div class="footer-section social">
+        <h3>Síguenos</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/colegioninojesus" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> @colegioninojesus
+          </a>
+          <a href="https://www.facebook.com/colegioninojesus" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i> /colegioninojesus
+          </a>
+        </div>
+      </div>
+      <div class="footer-section quick-links">
+        <h3>Enlaces Rápidos</h3>
+        <ul>
+          <li><a href="/inicio">Inicio</a></li>
+          <li><a href="/nosotros">Nosotros</a></li>
+          <li><a href="/admisiones">Admisiones</a></li>
+          <li><a href="/contacto">Contacto</a></li>
+          <li><a href="/evaluaciones">Evaluaciones</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>  {% now "Y" %} Colegio Niño Jesús. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Add Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="{% static 'js/menu_script.js' %}"></script>
+</body>
+</html>

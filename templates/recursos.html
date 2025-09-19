@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Recursos y Descargas - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<section id="recursos" class="py-5">
+  <div class="container">
+    <h2 class="mb-4">Recursos y Descargas</h2>
+    <ul class="list-group mb-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Reglamento escolar
+        <a href="{% static 'docs/reglamento_escolar.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Calendario académico
+        <a href="{% static 'docs/calendario_academico.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Guía para padres
+        <a href="{% static 'docs/guia_para_padres.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Formulario de inscripción
+        <a href="{% static 'docs/formulario_inscripcion.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+      </li>
+    </ul>
+    <p>Encuentra aquí documentos útiles para la comunidad educativa.</p>
+  </div>
+</section>
+{% endblock %}

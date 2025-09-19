@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto - Colegio Niño Jesús{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold">Contáctenos</h1>
+                <nav aria-label="breadcrumb" class="d-flex justify-content-center">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{% url 'admisiones:inicio' %}" class="text-white">Inicio</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Contacto</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-4">Envíenos un mensaje</h2>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post" action="{% url 'admisiones:contacto' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Correo electrónico *</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="asunto" class="form-label">Asunto *</label>
+                                        <input type="text" class="form-control" id="asunto" name="asunto" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="mensaje" class="form-label">Mensaje *</label>
+                                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h3 class="h5 mb-4">Información de contacto</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <div class="d-flex">
+                                    <i class="fas fa-map-marker-alt text-primary mt-1 me-3"></i>
+                                    <div>
+                                        <h4 class="h6 mb-0">Dirección</h4>
+                                        <p class="mb-0">
+                                            <a href="https://www.google.com/maps/search/?api=1&query=Calle+1era+no.+31%2C+Urbanización+Reparto+Edda%2C+Santo+Domingo%2C+República+Dominicana" target="_blank" class="text-decoration-none">
+                                                📍 Urb. Tropical, Ave. Independencia<br>
+                                                Calle 1era no. 31, Urbanización Reparto Edda, Santo Domingo, República Dominicana
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                {{ ... }}
+                                    <div>
+                                        <h4 class="h6 mb-0">Teléfono</h4>
+                                        <p class="mb-0">
+                                            <a href="tel:+18095551234" class="text-decoration-none">
+                                                📞 (809) 555-1234
+                                            </a>
+                                        </p>
+                                    </div>
+{{ ... }}
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex">
+                                    <i class="fas fa-envelope text-primary mt-1 me-3"></i>
+                                    <div>
+                                        <h4 class="h6 mb-0">Correo electrónico</h4>
+                                        <p class="mb-0">info@colegioninojesus.edu</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex">
+                                    <i class="fas fa-clock text-primary mt-1 me-3"></i>
+                                    <div>
+                                        <h4 class="h6 mb-0">Horario de atención</h4>
+                                        <p class="mb-0">Lunes a Viernes: 8:00 AM - 5:00 PM</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr class="my-4">
+                        <h4 class="h6 mb-3">Síganos en redes sociales</h4>
+                        <div class="social-links">
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2 mb-2">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2 mb-2">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/colegioninitojesus/" target="_blank" class="btn btn-outline-primary btn-sm me-2 mb-2">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2 mb-2">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Google Maps -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="ratio ratio-21x9 rounded overflow-hidden">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.678901234567!2d-74.005941!3d40.712776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjAiTiA3NMKwMDAnMjEuNiJX!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

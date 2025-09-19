@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Galería - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<section id="galeria" class="py-5">
+  <div class="container">
+    <h2 class="mb-4">Galería Multimedia</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+  <img src="{% static 'images/dia_del_hermano.jpg' %}" class="img-fluid rounded shadow" alt="Día del Hermano">
+        <p class="mt-2">Celebración del Día del Hermano</p>
+      </div>
+      <div class="col-md-4 mb-4">
+  <img src="{% static 'images/tips_lectura_comprensiva.jpg' %}" class="img-fluid rounded shadow" alt="Tips de Lectura Comprensiva">
+        <p class="mt-2">Actividad de lectura comprensiva</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{% static 'images/imagen colegio.JPG' %}" class="img-fluid rounded shadow" alt="Feria Científica">
+        <p class="mt-2">Feria Científica 2025</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.youtube.com/embed/1Fv6wzN2v2k" title="Presentación artística" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2">Presentación artística escolar</p>
+      </div>
+      <div class="col-md-6">
+        <div class="ratio ratio-16x9">
+          <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" title="Olimpiadas deportivas" allowfullscreen></iframe>
+        </div>
+        <p class="mt-2">Olimpiadas deportivas</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

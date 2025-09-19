@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Mi Panel de Usuario{% endblock %}
+{% block content %}
+<div class="container py-4" aria-label="Panel de usuario" role="main">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow mb-4" aria-label="Perfil de usuario" role="region">
+                <div class="card-header bg-primary text-white fw-bold">
+                    <i class="fas fa-user me-2"></i> Mi Perfil
+                </div>
+                <div class="card-body">
+                    <h4 class="fw-bold">{{ usuario.get_full_name|default:usuario.username }}</h4>
+                    <p><strong>Usuario:</strong> <span aria-label="Nombre de usuario">{{ usuario.username }}</span></p>
+                    <p><strong>Email:</strong> <span aria-label="Correo electrónico">{{ usuario.email }}</span></p>
+                    <p><strong>Rol:</strong> <span aria-label="Rol de usuario">{{ usuario.get_rol_display }}</span></p>
+                    <p><strong>Teléfono:</strong> <span aria-label="Teléfono">{{ usuario.telefono }}</span></p>
+                    <p><strong>Dirección:</strong> <span aria-label="Dirección">{{ usuario.direccion }}</span></p>
+                </div>
+            </div>
+            {% if hijos %}
+            <div class="card shadow mb-4" aria-label="Hijos vinculados" role="region">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="fas fa-child me-2"></i> Hijos Vinculados
+                </div>
+                <div class="card-body">
+                    {% for hijo in hijos %}
+                        <div class="mb-2">
+                            <strong aria-label="Nombre del hijo">{{ hijo.nombre }}</strong> ({{ hijo.grado }})<br>
+                            <small aria-label="Fecha de nacimiento">Nacimiento: {{ hijo.fecha_nacimiento|date:"d/m/Y" }}</small>
+                        </div>
+                    {% empty %}
+                        <p>No tienes hijos registrados.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if tareas %}
+            <div class="card shadow mb-4" aria-label="Tareas asignadas" role="region">
+                <div class="card-header bg-info text-white fw-bold">
+                    <i class="fas fa-tasks me-2"></i> Tareas Asignadas
+                </div>
+                <div class="card-body">
+                    {% for tarea in tareas %}
+                        <div class="mb-2">
+                            <strong aria-label="Título de la tarea">{{ tarea.titulo }}</strong> ({{ tarea.grado }})<br>
+                            <small aria-label="Fecha de entrega">Entrega: {{ tarea.fecha_entrega|date:"d/m/Y" }}</small>
+                        </div>
+                    {% empty %}
+                        <p>No tienes tareas asignadas.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if calificaciones %}
+            <div class="card shadow mb-4" aria-label="Calificaciones" role="region">
+                <div class="card-header bg-warning text-dark fw-bold">
+                    <i class="fas fa-star me-2"></i> Calificaciones
+                </div>
+                <div class="card-body">
+                    {% for calificacion in calificaciones %}
+                        <div class="mb-2">
+                            <strong aria-label="Tarea calificada">{{ calificacion.tarea.titulo }}</strong> - Nota: <span class="fw-bold" aria-label="Nota">{{ calificacion.nota }}</span><br>
+                            <small aria-label="Fecha de calificación">Fecha: {{ calificacion.fecha_asignada|date:"d/m/Y" }}</small>
+                            {% if calificacion.observaciones %}<br><em aria-label="Observaciones">{{ calificacion.observaciones }}</em>{% endif %}
+                        </div>
+                    {% empty %}
+                        <p>No hay calificaciones registradas.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="card shadow mb-4">
+                <div class="card-header bg-secondary text-white fw-bold">
+                    <i class="fas fa-cog me-2"></i> Configuración
+                </div>
+                <div class="card-body">
+                    <a href="mailto:{{ usuario.email }}" class="btn btn-outline-primary">Contactar soporte</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger ms-2" onclick="return confirm('¿Seguro que deseas cerrar la sesión?');">Cerrar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

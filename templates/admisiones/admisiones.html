@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- School Information Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 mb-3">Colegio Niñito Jesús</h1>
+        <p class="lead">Educación de calidad para un futuro brillante</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
+            <span class="badge bg-primary">🎓 Formación integral</span>
+            <span class="badge bg-success">💖 Valores</span>
+            <span class="badge bg-info">🎨 Creatividad</span>
+        </div>
+        <div class="school-info mt-4">
+            <p class="mb-1">🏫 Fundado en 1979</p>
+            <p class="mb-1">📍 Urb. Tropical, Ave. Independencia</p>
+            <p class="mb-1">Calle 1era no. 31, Urbanización Reparto Edda, Santo Domingo, República Dominicana</p>
+            <p class="mb-0">📞 Teléfono: (809) 533-6088</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h2 class="text-center mb-4">Proceso de Admisión</h2>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="h4 mb-3">Requisitos de Admisión</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Formulario de solicitud de admisión completo</li>
+                        <li class="list-group-item">Copia del acta de nacimiento</li>
+                        <li class="list-group-item">Copia de la cartilla de vacunación</li>
+                        <li class="list-group-item">Constancia de estudios del año anterior</li>
+                        <li class="list-group-item">2 Fotografías tamaño infantil</li>
+                        <li class="list-group-item">Copia de la CURP</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="h4 mb-3">Proceso de Inscripción</h3>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">Solicitar cita para entrevista</li>
+                        <li class="list-group-item">Presentar documentación requerida</li>
+                        <li class="list-group-item">Realizar evaluación diagnóstica (según el grado)</li>
+                        <li class="list-group-item">Entrevista con el departamento de orientación</li>
+                        <li class="list-group-item">Pago de inscripción y colegiatura</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="h4 mb-3">Información Adicional</h3>
+                    <p>Para más información sobre nuestro proceso de admisión, puede contactarnos a través de:</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> Teléfono: (809) 555-1234</li>
+                        <li><i class="fas fa-envelope me-2"></i> Email: admisiones@colegioninojesus.edu</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Dirección: Calle 1era no. 31, Urbanización Reparto Edda, Santo Domingo, República Dominicana</li>
+                    </ul>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <a href="{% url 'admisiones:contacto' %}" class="btn btn-primary btn-lg">Solicitar Informes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .school-info {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-left: 4px solid #0d6efd;
+    }
+    
+    .school-info p {
+        margin-bottom: 0.5rem;
+        font-size: 1.05rem;
+    }
+    
+    .display-4 {
+        color: #0d6efd;
+        font-weight: 600;
+    }
+    
+    .lead {
+        font-size: 1.5rem;
+        color: #495057;
+    }
+</style>
+{% endblock %}

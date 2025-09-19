@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Área para Estudiantes y Padres - Colegio Niño Jesús{% endblock %}
+{% block content %}
+<section id="padres-estudiantes" class="py-5">
+  <div class="container">
+    <h2 class="mb-4">Área para Estudiantes y Padres</h2>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h4>Descarga de Tareas</h4>
+        {% if user.is_authenticated %}
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Tarea de Matemáticas
+            <a href="{% static 'docs/tarea_matematicas.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Tarea de Lengua
+            <a href="{% static 'docs/tarea_lengua.pdf' %}" class="btn btn-outline-primary btn-sm" download>Descargar PDF</a>
+          </li>
+        </ul>
+        {% else %}
+        <div class="alert alert-info mt-2">Debes iniciar sesión para ver y descargar las tareas.</div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <h4>Boletines</h4>
+        {% if user.is_authenticated %}
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Boletín Primer Trimestre
+            <a href="{% static 'docs/boletin_trimestre1.pdf' %}" class="btn btn-outline-success btn-sm" download>Descargar PDF</a>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Boletín Segundo Trimestre
+            <a href="{% static 'docs/boletin_trimestre2.pdf' %}" class="btn btn-outline-success btn-sm" download>Descargar PDF</a>
+          </li>
+        </ul>
+        {% else %}
+        <div class="alert alert-info mt-2">Debes iniciar sesión para ver y descargar los boletines.</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h4>Formulario de Admisión</h4>
+        <a href="{% static 'docs/formulario_inscripcion.pdf' %}" class="btn btn-outline-info">Descargar Formulario</a>
+      </div>
+      <div class="col-md-6">
+        <h4>Pagos en Línea (Banco Popular)</h4>
+        {% if user.is_authenticated %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="https://www.popularenlinea.com/Personas/Pagos/PagosServicios" method="get" target="_blank" class="mb-3">
+            <div class="mb-2">
+              <label for="nombre_estudiante" class="form-label">Nombre del estudiante</label>
+              <input type="text" id="nombre_estudiante" name="nombre_estudiante" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <label for="concepto" class="form-label">Concepto</label>
+              <select id="concepto" name="concepto" class="form-select" required>
+                <option value="matricula">Matrícula</option>
+                <option value="mensualidad">Mensualidad</option>
+                <option value="inscripcion">Inscripción</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="monto" class="form-label">Monto (RD$)</label>
+              <input type="number" id="monto" name="monto" class="form-control" min="1" required>
+            </div>
+            <button type="submit" class="btn btn-outline-warning" id="pagoSubmitBtn">
+              <span id="pagoSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+              Ir a Pago en Línea
+            </button>
+          </form>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var pagoForm = document.querySelector('form[action="https://www.popularenlinea.com/Personas/Pagos/PagosServicios"]');
+            var pagoBtn = document.getElementById('pagoSubmitBtn');
+            var spinner = document.getElementById('pagoSpinner');
+            if (pagoForm && pagoBtn && spinner) {
+              pagoForm.addEventListener('submit', function() {
+                pagoBtn.disabled = true;
+                spinner.classList.remove('d-none');
+              });
+            }
+          });
+          </script>
+          </form>
+          <small class="text-muted">Serás redirigido al portal oficial de Banco Popular para completar el pago.</small>
+        {% else %}
+          <div class="alert alert-info mt-2">Debes iniciar sesión para acceder a pagos en línea.</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-12 d-flex justify-content-center gap-3 mb-4">
+        {% if user.is_authenticated %}
+          <a href="https://classroom.google.com/" target="_blank" class="btn btn-outline-success">Aula Virtual</a>
+          <form action="https://www.popularenlinea.com/Personas/Pagos/PagosServicios" method="get" target="_blank" style="display:inline;">
+            <button type="submit" class="btn btn-outline-warning">Pagos en Línea</button>
+          </form>
+        {% else %}
+          <div class="alert alert-info mt-2">Debes iniciar sesión para acceder a Aula Virtual y Pagos en Línea.</div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <h4>Redes Sociales y Plataformas</h4>
+        <a href="https://facebook.com" target="_blank" class="btn btn-outline-primary mb-2"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://instagram.com" target="_blank" class="btn btn-outline-danger mb-2"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://youtube.com" target="_blank" class="btn btn-outline-dark mb-2"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://pagos.colegioejemplo.edu.do" target="_blank" class="btn btn-outline-warning mb-2"><i class="fas fa-credit-card"></i> Pagos en Línea</a>
+        <a href="https://classroom.google.com/" target="_blank" class="btn btn-outline-success mb-2"><i class="fab fa-google"></i> Google Classroom</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

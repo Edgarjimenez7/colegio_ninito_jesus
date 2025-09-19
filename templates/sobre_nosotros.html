@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Sobre Nosotros - Colegio Niño Jesús{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold">Sobre Nosotros</h1>
+                <nav aria-label="breadcrumb" class="d-flex justify-content-center">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{% url 'admisiones:inicio' %}" class="text-white">Inicio</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Sobre Nosotros</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://via.placeholder.com/600x400" alt="Nuestro Colegio" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-4">Nuestra Historia</h2>
+                <p class="lead">Fundado en 1980, el Colegio Niño Jesús ha sido un pilar en la educación de excelencia en nuestra comunidad.</p>
+                <p>Desde nuestros humildes comienzos, nos hemos comprometido a brindar una educación integral que combine valores cristianos con excelencia académica, formando líderes que impacten positivamente en la sociedad.</p>
+                <p>Nuestro compromiso con la calidad educativa nos ha permitido crecer y adaptarnos a los desafíos del siglo XXI, siempre manteniendo nuestros principios fundamentales.</p>
+            </div>
+        </div>
+
+        <!-- Mission, Vision, Values -->
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-bullseye fa-2x"></i>
+                        </div>
+                        <h3 class="h5">Misión</h3>
+                        <p class="mb-0">Formar personas íntegras a través de una educación de calidad basada en valores cristianos, promoviendo el desarrollo intelectual, espiritual y social de nuestros estudiantes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-eye fa-2x"></i>
+                        </div>
+                        <h3 class="h5">Visión</h3>
+                        <p class="mb-0">Ser reconocidos como una institución líder en educación integral, comprometida con la excelencia académica y la formación en valores para un mundo en constante cambio.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-heart fa-2x"></i>
+                        </div>
+                        <h3 class="h5">Valores</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li>• Respeto</li>
+                            <li>• Responsabilidad</li>
+                            <li>• Solidaridad</li>
+                            <li>• Honestidad</li>
+                            <li>• Excelencia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Teachers/Staff Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Nuestro Equipo</h2>
+            <p class="lead">Profesionales comprometidos con la educación de calidad</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Directora">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-1">Dra. María González</h5>
+                        <p class="text-muted small">Directora General</p>
+                        <p class="card-text small">Con más de 20 años de experiencia en educación, la Dra. González lidera nuestra institución con pasión y dedicación.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Coordinador Académico">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-1">Lic. Carlos Rodríguez</h5>
+                        <p class="text-muted small">Coordinador Académico</p>
+                        <p class="card-text small">Comprometido con la excelencia educativa y la innovación en los procesos de enseñanza-aprendizaje.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Orientadora">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-1">Psic. Laura Martínez</h5>
+                        <p class="text-muted small">Orientadora Educativa</p>
+                        <p class="card-text small">Acompañando el desarrollo emocional y social de nuestros estudiantes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Facilities Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Nuestras Instalaciones</h2>
+            <p class="lead">Ambientes diseñados para el aprendizaje y desarrollo integral</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Aulas">
+                    <div class="card-body">
+                        <h5 class="card-title">Aulas Equipadas</h5>
+                        <p class="card-text">Amplias aulas con tecnología de punta para un aprendizaje interactivo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Laboratorio">
+                    <div class="card-body">
+                        <h5 class="card-title">Laboratorios</h5>
+                        <p class="card-text">Equipados con la última tecnología para prácticas científicas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Deportes">
+                    <div class="card-body">
+                        <h5 class="card-title">Áreas Deportivas</h5>
+                        <p class="card-text">Amplias canchas y espacios para el desarrollo físico y deportivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
