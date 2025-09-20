@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    image: colegio_ninito_jesus:local
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=1
+      - DJANGO_SECRET_KEY=dev-secret-key
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+    volumes:
+      - .:/app:rw
+    command: gunicorn colegio_ninito_jesus.wsgi --bind 0.0.0.0:8000 --log-file -
