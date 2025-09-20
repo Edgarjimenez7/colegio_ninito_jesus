@@ -44,5 +44,5 @@ USER appuser
 # Puerto que Render proveerá a través de la variable $PORT
 ENV PORT=8000
 
-# Start command - Render ignorará Procfile cuando uses Docker
-CMD ["gunicorn", "colegio_ninito_jesus.wsgi", "--bind", "0.0.0.0:$PORT", "--log-file", "-"]
+# Start command - use shell form so environment variable $PORT is expanded at run time
+CMD gunicorn colegio_ninito_jesus.wsgi --bind 0.0.0.0:$PORT --log-file -
