@@ -9,6 +9,7 @@ services:
       - DJANGO_DEBUG=1
       - DJANGO_SECRET_KEY=dev-secret-key
       - ALLOWED_HOSTS=127.0.0.1,localhost
+      - PORT=8000
     volumes:
       - .:/app:rw
     command: gunicorn colegio_ninito_jesus.wsgi --bind 0.0.0.0:8000 --log-file -
