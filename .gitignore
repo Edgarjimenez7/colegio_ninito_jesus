@@ -1,0 +1,34 @@
+# Archivos y carpetas a ignorar en el repositorio
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+.env.*
+*.log
+/staticfiles/
+/media/
+.DS_Store
+.envrc
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+.env.local
+.env.production
+.env.development
+node_modules/
+venv/
+env/
+*.egg-info/
+*.egg
+*.coverage
+.coverage.*
+dist/
+build/
+
+# Ignora archivos de configuración de sistema
+Thumbs.db
