@@ -1,5 +1,10 @@
 from django import forms
-from .models import MensajeContacto
+from .models import Multimedia, MensajeContacto, Testimonio, Hijo, PadreHijo, Usuario, Tarea, Calificacion
+
+class MultimediaForm(forms.ModelForm):
+    class Meta:
+        model = Multimedia
+        fields = ['titulo', 'descripcion', 'archivo', 'tipo']
 
 class MensajeContactoForm(forms.ModelForm):
     class Meta:

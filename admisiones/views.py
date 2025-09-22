@@ -1,3 +1,5 @@
+from .forms import MultimediaForm
+from django.utils.decorators import method_decorator
 from .forms import MensajeContactoForm
 from .models import MensajeContacto
 from django.contrib import messages
@@ -54,10 +56,30 @@ def testimonios_view(request):
 from .models import Multimedia
 from django.views.generic import ListView
 
+
+
+@method_decorator(login_required, name='dispatch')
 class GaleriaMultimediaView(ListView):
     model = Multimedia
     template_name = 'galeria_multimedia.html'
     context_object_name = 'multimedia'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_staff:
+            context['form'] = MultimediaForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return redirect('galeria_multimedia')
+        form = MultimediaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('galeria_multimedia')
+        context = self.get_context_data()
+        context['form'] = form
+        return render(request, self.template_name, context)
     paginate_by = 12
 # Panel de administración visual (dashboard)
 from django.contrib.admin.views.decorators import staff_member_required
@@ -544,26 +566,3 @@ class EventoDeleteView(AdminRequiredMixin, DeleteView):
         messages.success(request, 'El evento se ha eliminado correctamente.')
         return super().delete(request, *args, **kwargs)
 
-class GaleriaView(ListView):
-    model = GaleriaImagen
-    template_name = 'galeria/lista.html'
-    context_object_name = 'imagenes'
-    paginate_by = 20
-    ordering = ['-fecha_subida']
-
-def sobre_nosotros(request):
-    return render(request, 'sobre_nosotros.html')
-
-def contacto(request):
-    return render(request, 'contacto.html')
-
-def admisiones(request):
-    """Vista para la página de admisiones."""
-    context = {
-        'title': 'Admisiones',
-        'active_page': 'admisiones'
-    }
-    return render(request, 'admisiones/admisiones.html', context)
-
-def test_template(request):
-    return render(request, 'test_template.html')

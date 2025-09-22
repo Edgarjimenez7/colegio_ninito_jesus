@@ -122,7 +122,13 @@ DATABASES = {
 # If Heroku (or another host) provides DATABASE_URL, configure the DB from it
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=False)
+    try:
+        import dj_database_url
+        db_config = dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=False)
+        if db_config and isinstance(db_config, dict) and db_config.get('ENGINE'):
+            DATABASES['default'] = db_config
+    except Exception as e:
+        print(f"DATABASE_URL inválido, usando sqlite. Error: {e}")
 
 
 # Password validation
@@ -167,8 +173,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Use WhiteNoise storage so Heroku can serve static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Media files (user uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Use WhiteNoise storage so Render/Heroku can serve static files
+# Use a permissive storage in development (Windows) and the manifest storage in production
+if DEBUG:
+    # Avoid Manifest storage locally (file-lock issues on Windows)
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+else:
+    # In production use Manifest storage to enable long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files (user uploaded files)
 MEDIA_URL = '/media/'

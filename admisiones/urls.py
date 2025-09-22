@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     NoticiaListView, NoticiaDetailView, NoticiaCreateView, 
     EventoListView, EventoDetailView, EventoCreateView, EventoUpdateView, EventoDeleteView,
-    GaleriaView, InicioView, contacto, sobre_nosotros, admisiones, institucional, galeria_multimedia, calendario_escolar, testimonios, recursos, mapa, padres_estudiantes, registro_usuario, login_usuario, registrar_hijo,
+    InicioView, institucional, galeria_multimedia, calendario_escolar, testimonios, recursos, mapa, padres_estudiantes, registro_usuario, login_usuario, registrar_hijo,
     crear_tarea, asignar_calificacion, lista_tareas_profesor, lista_calificaciones_profesor, tareas_grado_padre, calificaciones_hijos_padre,
     calificaciones_redirect, tareas_redirect, panel_profesor, recuperar_contrasena, crear_notificacion, panel_usuario, reset_password
 )
@@ -24,7 +24,7 @@ urlpatterns = [
     path('recursos/', recursos, name='recursos'),
     path('testimonios/', testimonios_view, name='testimonios'),
     path('calendario/', calendario_escolar, name='calendario_escolar'),
-    path('galeria-multimedia/', GaleriaMultimediaView.as_view(), name='galeria_multimedia'),
+    path('galeria/', GaleriaMultimediaView.as_view(), name='galeria'),
     # Home
     path('', InicioView.as_view(), name='inicio'),
     
@@ -42,7 +42,6 @@ urlpatterns = [
     path('eventos/eliminar/<slug:slug>/', EventoDeleteView.as_view(), name='eliminar_evento'),
     
     # Galería
-    path('galeria/', GaleriaView.as_view(), name='galeria'),
     
     # Otras páginas
     path('historia/', institucional, name='historia'),
@@ -65,11 +64,9 @@ urlpatterns = [
     path('tareas/', tareas_redirect, name='tareas_redirect'),
     path('vision/', institucional, name='vision'),
     path('institucional/', institucional, name='institucional'),
-    path('sobre-nosotros/', sobre_nosotros, name='sobre_nosotros'),
-    path('contacto/', contacto, name='contacto'),
     path('catalogo-libros/', institucional, name='catalogo_libros'),
-    path('admisiones/', admisiones, name='admisiones'),
     path('dashboard-admin/', dashboard_panel_admin, name='dashboard_panel_admin'),
     path('pagos-en-linea/', pagos_en_linea_view, name='pagos_en_linea'),
     path('comprobante-pago/', comprobante_pago_view, name='comprobante_pago'),
+        path('contacto/', contacto_view, name='contacto'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,6 +2,16 @@
 {% block content %}
 <div class="galeria-multimedia">
     <h1>Galería Multimedia</h1>
+    {% if user.is_staff and form %}
+    <div class="media-upload-form">
+        <h2>Subir nueva imagen/video</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Subir</button>
+        </form>
+    </div>
+    {% endif %}
     <div class="multimedia-grid">
         {% for item in multimedia %}
             <div class="media-card">

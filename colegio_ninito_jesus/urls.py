@@ -7,11 +7,11 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('admisiones.urls')),
+    path('', include(('admisiones.urls', 'admisiones'), namespace='admisiones')),
     path('evaluaciones/', include('evaluations.urls', namespace='evaluations')),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
-    path('admisiones/', views.admisiones, name='admisiones'),
+    # Ruta eliminada para evitar conflicto de nombres con el namespace 'admisiones'
     path('area/matematicas/', views.area_matematicas, name='area_matematicas'),
     path('area/ciencias/', views.area_ciencias, name='area_ciencias'),
     path('area/espanol/', views.area_espanol, name='area_espanol'),

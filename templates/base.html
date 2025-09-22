@@ -28,7 +28,6 @@
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:historia' %}" aria-label="Ir a Historia">Historia</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:mision' %}" aria-label="Ir a Misión">Misión</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:vision' %}" aria-label="Ir a Visión">Visión</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:admisiones' %}" aria-label="Ir a Admisiones">Admisiones</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:lista_noticias' %}">Noticias</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:contacto' %}">Contacto</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="{% url 'admisiones:galeria' %}">Galería</a></li>
@@ -77,7 +76,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="academicoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Académico</a>
                         <ul class="dropdown-menu" aria-labelledby="academicoDropdown">
-                            <li><a class="dropdown-item" href="{% url 'admisiones:galeria_multimedia' %}">Galería</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admisiones:galeria' %}">Galería</a></li>
                             <li><a class="dropdown-item" href="{% url 'admisiones:calendario_escolar' %}">Calendario</a></li>
                             <li><a class="dropdown-item" href="{% url 'admisiones:recursos' %}">Recursos</a></li>
                             <li><a class="dropdown-item" href="{% url 'admisiones:testimonios' %}">Testimonios</a></li>
@@ -86,7 +85,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="admisionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admisiones</a>
                         <ul class="dropdown-menu" aria-labelledby="admisionDropdown">
-                            <li><a class="dropdown-item" href="{% url 'admisiones:admisiones' %}">Información</a></li>
+                            <!-- Enlace eliminado: la ruta 'admisiones:admisiones' no existe -->
                             <li><a class="dropdown-item" href="{% url 'admisiones:padres_estudiantes' %}">Padres/Estudiantes</a></li>
                         </ul>
                     </li>
